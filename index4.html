@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cera 💖 Bradley 💕</title>
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3rem;
+      text-align: center;
+      color: white;
+      text-shadow: 2px 2px #ff5a5a;
+      margin-bottom: 40px;
+    }
+
+    button {
+      padding: 20px 40px;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.2s;
+    }
+
+    #yes {
+      background: #ff1a75;
+      color: white;
+      margin-right: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    #no {
+      background: white;
+      color: #ff1a75;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(-45deg);
+      animation: float 4s linear forwards;
+    }
+
+    .heart:before,
+    .heart:after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart:before { top: -10px; left: 0; }
+    .heart:after { left: 10px; top: 0; }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
+      100% { transform: translateY(-500px) rotate(-45deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cera 💖 Bradley 💕✨💌</h1>
+
+  <div>
+    <button id="yes">YES 💖💘😍</button>
+    <button id="no">NO 😅💔🙈</button>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+
+    // YES button starts normal size
+    let yesSize = 1;
+
+    // NO button runs away on hover
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+
+      // YES grows bigger each time NO moves
+      yesSize += 0.1;
+      yesBtn.style.transform = `scale(${yesSize})`;
+    });
+
+    // Floating hearts in background
+    function createFloatingHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.bottom = "-50px";
+      heart.style.width = 10 + Math.random() * 20 + "px";
+      heart.style.height = heart.style.width;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }
+    setInterval(createFloatingHeart, 300);
+
+    // Burst of hearts and emojis when YES is clicked
+    yesBtn.addEventListener("click", () => {
+      for(let i=0; i<40; i++){
+        const burst = document.createElement("div");
+        burst.classList.add("heart");
+        burst.style.left = yesBtn.offsetLeft + yesBtn.offsetWidth/2 + (Math.random()*100 -50) + "px";
+        burst.style.top = yesBtn.offsetTop + yesBtn.offsetHeight/2 + (Math.random()*100 -50) + "px";
+        burst.style.width = 15 + Math.random()*20 + "px";
+        burst.style.height = burst.style.width;
+        document.body.appendChild(burst);
+
+        // Add emoji hearts
+        const emoji = document.createElement("div");
+        emoji.textContent = ["💖","💘","💕","💌","🥰"][Math.floor(Math.random()*5)];
+        emoji.style.position = "absolute";
+        emoji.style.left = burst.style.left;
+        emoji.style.top = burst.style.top;
+        emoji.style.fontSize = burst.style.width;
+        document.body.appendChild(emoji);
+
+        setTimeout(()=> { burst.remove(); emoji.remove(); }, 1500);
+      }
+
+      setTimeout(() => {
+        alert("You better plan something cute 😎💘💖");
+      }, 500);
+    });
+
+  </script>
+
+</body>
+</html>
